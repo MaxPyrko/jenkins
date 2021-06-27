@@ -9,15 +9,6 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
-            steps {
-                sh '''
-                printenv
-                docker build -t $IMAGE_REPO:$TAG-$GIT_COMMIT -t $IMAGE_REPO:latest ./
-                '''
-            }
-        }
-
         stage('Tests') {
             agent {
                 docker {
@@ -42,6 +33,16 @@ pipeline {
                         ]
                     )
                 }
+            }
+        }
+        stage('Build') {
+            steps {
+                sh '''
+                printenv
+                docker build -t $IMAGE_REPO:$TAG-$GIT_COMMIT -t $IMAGE_REPO:latest ./
+                docker push $IMAGE_REPO:$TAG-$GIT_COMMIT
+                docker push $IMAGE_REPO:latest
+                '''
             }
         }
     }
