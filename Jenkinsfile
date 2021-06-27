@@ -32,6 +32,16 @@ pipeline {
                 npm test
                 '''
             }
+
+            post {
+                always {
+                    recordIssues(
+                        tools: [
+                            junitParser(pattern: 'test-results.xml')
+                        ]
+                    )
+                }
+            }
         }
     }
 }
