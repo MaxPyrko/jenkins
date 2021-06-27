@@ -48,6 +48,9 @@ pipeline {
             }
         }
         stage('Deploy') {
+            environment {
+                NAMESPACE = 'pyrko'
+            }
             steps {
                 sh '''
                 tmpfile=$(mktemp)
@@ -57,6 +60,10 @@ pipeline {
                     rm -f "$tmpfile"
                 done
                 '''
+
+                withCredentials([kubeconfigFile(credentialsId: 'c3b37b51-5f32-4fac-8e1e-031468632cee', variable: 'KUBECONFIG')]) {
+                    sh 'kubectl -n $NAMESPACE apply -f kubernetes/'
+                }
             }
         }
     }
