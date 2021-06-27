@@ -5,7 +5,7 @@ pipeline {
 
     environment {
         IMAGE_REPO = 'wordprove/java'
-        TAG = sh(script: "jq -r /version package.json", returnStdout: true).trim()
+        TAG = sh(script: "jq -r .version package.json", returnStdout: true).trim()
     }
 
     stages {
