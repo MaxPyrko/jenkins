@@ -47,17 +47,17 @@ pipeline {
                 }
             }
         }
-        // stage('Deploy') {
-        //     steps {
-        //         sh '''
-        //         tmpfile=$(mktemp)
-        //         for i in kubernetes/*.yaml; do
-        //             cat $i | envsubst > $tmpfile
-        //             cp -pf $tmpfile $i
-        //             rm -f "$tmpfile"
-        //         done
-        //         '''
-        //     }
-        // }
+        stage('Deploy') {
+            steps {
+                sh '''
+                tmpfile=$(mktemp)
+                for i in kubernetes/*.yaml; do
+                    cat $i | envsubst > $tmpfile
+                    cp -pf $tmpfile $i
+                    rm -f "$tmpfile"
+                done
+                '''
+            }
+        }
     }
 }
