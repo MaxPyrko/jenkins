@@ -36,6 +36,7 @@ pipeline {
             post {
                 always {
                     recordIssues(
+                        enabledForFailure: true, 
                         tools: [
                             junitParser(pattern: 'test-results.xml')
                         ]
