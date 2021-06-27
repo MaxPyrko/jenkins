@@ -11,8 +11,26 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'printenv'
-                sh 'docker build -t $IMAGE_REPO:$TAG-$GIT_COMMIT -t $IMAGE_REPO:latest ./'
+                sh '''
+                printenv
+                docker build -t $IMAGE_REPO:$TAG-$GIT_COMMIT -t $IMAGE_REPO:latest ./
+                '''
+            }
+        }
+
+        stage('Tests') {
+            agent {
+                docker {
+                    image 'node:14-alpine'
+                    label 'docker'
+                }
+                
+            }
+            steps {
+                sh '''
+                npm ci
+                npm test
+                '''
             }
         }
     }
