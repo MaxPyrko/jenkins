@@ -4,7 +4,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_REPO = 'wordprove/java'
+        IMAGE_REPO = 'rove/jaa'
         TAG = '1.0.0'
     }
 
